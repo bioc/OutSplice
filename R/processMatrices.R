@@ -42,15 +42,18 @@ processMatrices1 <- function(pheno, all.junc, all.samples, all.gene_expr, rawcou
 
     geneAnnot <- getGenomicInfo(junc.RPM, annotation, TxDb)
 
+    #Filter events without event type
     geneAnnot <- geneAnnot[apply(cbind(
         geneAnnot$deletions, geneAnnot$insertions,
         geneAnnot$skipping
     ), 1, any), ]
+
     junc.RPM <- junc.RPM[names(geneAnnot), ]
 
     ##################################################################
     message("remove all that map to 'NA' no gene name, and assign gene expression from gene_expr")
     junc.RPM <- junc.RPM[!is.na(geneAnnot$SYMBOL), ]
+
     geneAnnot <- geneAnnot[row.names(junc.RPM), ]
 
     ## remove row names for unknown genes containing "?" unknown genes
@@ -65,7 +68,7 @@ processMatrices1 <- function(pheno, all.junc, all.samples, all.gene_expr, rawcou
     return(os_data)
 }
 
-# Second Shared Sub FUnction for outSpliceAnalysis and outSpliceTCGA for overall data processing
+# Second Shared Sub Function for outSpliceAnalysis and outSpliceTCGA for overall data processing
 
 processMatrices2 <- function(junc.RPM, junctionGenegene_expr, PHENO, offsets_value,
                              correction_setting, p_value, pheno, geneAnnot, saveOutput, output_file_prefix, dir, date) {
@@ -117,6 +120,7 @@ processMatrices2 <- function(junc.RPM, junctionGenegene_expr, PHENO, offsets_val
     ## aggregate the data
     gene_expr <- junctionGenegene_expr
     junc.RPM.norm <- junc.RPM.norm
+
     geneAnnotations <- geneAnnot
     geneAnnot <- geneAnnot[junctions]
     ASE.type <- cbind(geneAnnot$skipping, geneAnnot$insertions, geneAnnot$deletions)
