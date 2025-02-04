@@ -156,7 +156,7 @@ matrix file contains a header row with the first column designating the sample
 names, and the second column designating the phenotype. If using TCGA data, 
 the two phenotypes are "tumor" and "normal." outspliceTCGA can automatically 
 infer the phenotype of TCGA data using the sample names. Only if the phenotype 
-matrix has more than 10 control samples, the program proceeds. 
+matrix has more than 10 control samples, and more than 1 tumor sample, the program proceeds. 
 
 ## plotJunctionData
 
